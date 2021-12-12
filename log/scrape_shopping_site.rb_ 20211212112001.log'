@@ -1,0 +1,4 @@
+# Logfile created on 2021-12-12 11:20:01 +0900 by logger.rb/v1.4.3
+E, [2021-12-12T11:20:01.575897 #19433] ERROR -- : *error log
+F, [2021-12-12T11:20:01.575946 #19433] FATAL -- : *fatal log
+A, [2021-12-12T11:20:01.575969 #19433]   ANY -- : *unknown log
