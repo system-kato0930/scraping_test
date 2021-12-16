@@ -32,21 +32,32 @@ service.client_options.application_name = APPLICATION_NAME
 service.authorization = authorize
 spreadsheet_id = '1SuFFSAAIoU_RZTQiFc9RcKfb5l64kqHL2UkG1ieVdC8'
 
-range = 'A1:B10'
+range = "'テスト'!A:D"
 response = service.get_spreadsheet_values(spreadsheet_id, range)
 puts 'No data found.' if response.values.empty?
 response.values.each do |row|
-  puts "#{row[0]}, #{row[1]}"
+  puts "#{row[0]}, #{row[1]}, #{row[2]}, #{row[3]}"
 end
 
-range = 'A11'
+# range = 'A11'
+# data = Google::Apis::SheetsV4::ValueRange.new
+# data.major_dimension = 'ROWS'
+# data.range = 'A11'
+# random = rand(100)
+# data.values = [["hoge#{random}"]]
+# options = {
+#   value_input_option: 'RAW'
+# }
+# response = service.update_spreadsheet_value(spreadsheet_id, range, data, value_input_option: 'RAW')
+# puts response.updated_cells
+
 data = Google::Apis::SheetsV4::ValueRange.new
-data.major_dimension = 'ROWS'
-data.range = 'A11'
-random = rand(100)
-data.values = [["hoge#{random}"]]
-options = {
-  value_input_option: 'RAW'
-}
+data.major_dimension = 'COLUMNS'
+sheet_name_data = "テスト"
+result_data = ["在庫状況", "○在庫あり", "○在庫あり", "○在庫あり", "○在庫あり"]
+data.values = [result_data]
+# range = %('#{sheet_name_data}'!D2:D#{result_data.count+1})
+range = %('#{sheet_name_data}'!D2:D#{result_data.count+1})
+pp data
 response = service.update_spreadsheet_value(spreadsheet_id, range, data, value_input_option: 'RAW')
 puts response.updated_cells

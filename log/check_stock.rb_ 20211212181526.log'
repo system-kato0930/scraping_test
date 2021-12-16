@@ -1,0 +1,21 @@
+# Logfile created on 2021-12-12 18:15:26 +0900 by logger.rb/v1.4.3
+F, [2021-12-12T18:15:58.035877 #26998] FATAL -- : 【在庫チェック失敗】URL：https://item.fril.jp/de9ae58a945c16084502dd2e091a05a6
+F, [2021-12-12T18:17:34.620895 #26998] FATAL -- : 【在庫チェック失敗】URL：https://store.shopping.yahoo.co.jp/daiou88888/cccc.html
+F, [2021-12-12T18:18:35.629905 #26998] FATAL -- : 【在庫チェック失敗】URL：https://www.bookoffonline.co.jp/old/0019552880
+F, [2021-12-12T18:19:36.635199 #26998] FATAL -- : 【在庫チェック失敗】URL：https://page.auctions.yahoo.co.jp/jp/auction/e1004988458
+F, [2021-12-12T18:20:37.660965 #26998] FATAL -- : 【在庫チェック失敗】URL：https://www.bookoffonline.co.jp/new/0019642933
+F, [2021-12-12T18:21:38.668701 #26998] FATAL -- : 【在庫チェック失敗】URL：https://page.auctions.yahoo.co.jp/jp/auction/k432772283
+F, [2021-12-12T18:22:39.681838 #26998] FATAL -- : 【在庫チェック失敗】URL：https://jp.mercari.com/item/m82637463522
+F, [2021-12-12T18:23:40.701502 #26998] FATAL -- : 【在庫チェック失敗】URL：https://item.fril.jp/6c29800f55e9039bcb99702118c3af28
+F, [2021-12-12T18:25:13.772767 #26998] FATAL -- : 【在庫チェック失敗】URL：https://www.suruga-ya.jp/product/detail/602031493?tenpo_cd=400412&branch_number=9000
+F, [2021-12-12T18:25:15.266930 #26998] FATAL -- : 【在庫チェック失敗】URL：https://order.mandarake.co.jp/order/detailPage/item?itemCode=1080337894&ref=list&keyword=%E3%83%95%E3%82%A3%E3%82%AE%E3%83%A5%E3%82%A2
+F, [2021-12-12T18:25:16.361072 #26998] FATAL -- : 【在庫チェック失敗】URL：https://item.rakuten.co.jp/mediaworldkaitoriworld/50003065001/?scid=af_pc_etc&sc2id=af_101_0_0
+F, [2021-12-12T18:25:17.460221 #26998] FATAL -- : 【在庫チェック失敗】URL：https://store.shopping.yahoo.co.jp/media-world/50006891001.html?sc_i=shp_pc_top_recomFromHistory_hist_6&a_tm=1638826906&a_pg=shp_top&a_pu=https%3A%2F%2Fshopping.yahoo.co.jp%2F&a_tp=click_item_module&a_im=viewhist
+F, [2021-12-12T18:25:18.684810 #26998] FATAL -- : 【在庫チェック失敗】URL：https://www.bookoffonline.co.jp/new/0019552880
+F, [2021-12-12T18:25:19.902586 #26998] FATAL -- : 【在庫チェック失敗】URL：https://page.auctions.yahoo.co.jp/jp/auction/n502728636
+F, [2021-12-12T18:25:22.392089 #26998] FATAL -- : 【在庫チェック失敗】URL：https://item.fril.jp/3b69fcd609b4ceca3ac302e852f4e60a
+F, [2021-12-12T18:25:23.600473 #26998] FATAL -- : 【在庫チェック失敗】URL：https://paypayfleamarket.yahoo.co.jp/item/z53704880
+F, [2021-12-12T18:25:24.762038 #26998] FATAL -- : 【在庫チェック失敗】URL：https://netmall.hardoff.co.jp/disp/CHfSfNoGoodsError.jsp
+F, [2021-12-12T18:25:25.832616 #26998] FATAL -- : 【在庫チェック失敗】URL：https://www.rakuten.co.jp/surugaya-a-too/
+F, [2021-12-12T18:25:26.990776 #26998] FATAL -- : 【在庫チェック失敗】URL：https://www.amazon.co.jp/dp/B002U8EC5E?tag=frima-prize02-22&linkCode=osi&th=1&psc=1
+F, [2021-12-12T18:25:28.234290 #26998] FATAL -- : 【在庫チェック失敗】URL：https://www.rakuten.co.jp/liberty/
