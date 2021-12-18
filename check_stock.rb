@@ -24,6 +24,7 @@ def check_stock(session, url, words)
 
 	# 判定
 	html = session.page_source
+	puts html
 	if words[:keyword_short].any? { |t| html.include?(t) }
 		# 在庫なし
 		:res_short
@@ -89,7 +90,7 @@ service.authorization = authorize
 # リストの作成
 keyword_list = {}
 sheet_name_word_settings = "ワード設定"
-range = %(#{sheet_name_word_settings}!A2:D50)
+range = %(#{sheet_name_word_settings}!A2:E50)
 response = service.get_spreadsheet_values(spreadsheet_id, range)
 response.values.each do |row|
 	pp row
