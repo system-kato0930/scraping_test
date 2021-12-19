@@ -169,9 +169,9 @@ options.add_argument("--user-agent=#{user_agent}")
 options.add_argument('headless')
 options.add_argument('--disable-gpu')
 # options.add_argument('window-size=950,800')
-options.add_argument('--no-sandbox')
-options.add_argument('--disable-dev-shm-usage')
-options.add_argument('--remote-debugging-port=9222')
+# options.add_argument('--no-sandbox')
+# options.add_argument('--disable-dev-shm-usage')
+# options.add_argument('--remote-debugging-port=9222')
 session = Selenium::WebDriver.for :chrome, options: options
 session.manage.timeouts.implicit_wait = 10 # 10秒待っても読み込まれない場合は、エラーが発生する
 
