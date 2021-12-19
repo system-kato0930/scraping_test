@@ -166,8 +166,8 @@ puts "========================"
 options = Selenium::WebDriver::Chrome::Options.new
 user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.2 Safari/605.1.15'
 options.add_argument("--user-agent=#{user_agent}")
-options.add_argument('headless')
-options.add_argument('--disable-gpu')
+# options.add_argument('headless')
+# options.add_argument('--disable-gpu')
 # options.add_argument('window-size=950,800')
 # options.add_argument('--no-sandbox')
 # options.add_argument('--disable-dev-shm-usage')
