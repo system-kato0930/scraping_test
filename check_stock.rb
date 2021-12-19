@@ -93,7 +93,7 @@ sheet_name_word_settings = "ワード設定"
 range = %(#{sheet_name_word_settings}!A2:E50)
 response = service.get_spreadsheet_values(spreadsheet_id, range)
 response.values.each do |row|
-	pp row
+	# pp row
 	site_name = row[0]
 	domain = row[1]
 	keyword_short = row[2].nil? ? [] : row[2].split(",")
@@ -114,6 +114,8 @@ end
 options = Selenium::WebDriver::Chrome::Options.new
 user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.2 Safari/605.1.15'
 options.add_argument("--user-agent=#{user_agent}")
+options.add_argument('headless')
+options.add_argument('window-size=1440,990')
 session = Selenium::WebDriver.for :chrome, options: options
 session.manage.timeouts.implicit_wait = 5 # 10秒待っても読み込まれない場合は、エラーが発生する
 
