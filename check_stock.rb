@@ -24,7 +24,7 @@ def check_stock(session, url, words)
 
 	# 判定
 	html = session.page_source
-	puts html
+	# puts html
 	if words[:keyword_short].any? { |t| html.include?(t) }
 		# 在庫なし
 		:res_short
