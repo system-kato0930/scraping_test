@@ -17,7 +17,7 @@ def check_stock(session, url, words)
 
 	# メルカリはページ遷移に時間がかかるため、待つ
 	# アクセス先の負荷軽減も兼ねる
-	sleep(10)
+	sleep(5)
 
 	# ページのタイトルを出力する
 	puts %(タイトル：#{session.title})
