@@ -16,7 +16,7 @@ def check_stock(session, url, words)
 	session.navigate.to url
 
 	# ページのタイトルを出力する
-	puts session.title
+	puts %(＊ #{session.title})
 
 	# メルカリはページ遷移に時間がかかるため、待つ
 	# アクセス先の負荷軽減も兼ねる
@@ -83,11 +83,17 @@ def authorize
   credentials
 end
 
+puts "========================"
+puts "Google OAuth"
+puts "========================"
+
 service = Google::Apis::SheetsV4::SheetsService.new
 service.client_options.application_name = APPLICATION_NAME
 service.authorization = authorize
 
-# リストの作成
+puts "========================"
+puts "在庫ワード取得"
+puts "========================"
 keyword_list = {}
 sheet_name_word_settings = "ワード設定"
 range = %(#{sheet_name_word_settings}!A2:E50)
@@ -107,10 +113,9 @@ response.values.each do |row|
 end
 # pp keyword_list
 
-# ループで一件ずつチェック→結果を格納
-# 100件ずつスプレッドシートに書き込み
-
-# seleniumの設定
+puts "========================"
+puts "Selenium セットアップ"
+puts "========================"
 options = Selenium::WebDriver::Chrome::Options.new
 user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.2 Safari/605.1.15'
 options.add_argument("--user-agent=#{user_agent}")
@@ -123,11 +128,16 @@ options.add_argument('--remote-debugging-port=9222')
 session = Selenium::WebDriver.for :chrome, options: options
 session.manage.timeouts.implicit_wait = 5 # 10秒待っても読み込まれない場合は、エラーが発生する
 
-# 対象URLの取得
+puts "========================"
+puts "対象URLの取得"
+puts "========================"
 range = %('#{sheet_name_data}'!A:D)
-puts range
+# puts range
 response = service.get_spreadsheet_values(spreadsheet_id, range)
 
+puts "========================"
+puts "在庫チェック開始"
+puts "========================"
 result_data = []
 response.values.each_with_index do |row, idx|
 	target_url = row[0]
@@ -151,6 +161,7 @@ response.values.each_with_index do |row, idx|
 		check_res = check_stock(session, target_url, keyword_list[domain])
 		puts check_res
 		result_data.push(res_word[check_res])
+		puts %(　 →#{res_word[check_res]})
 	rescue => e
 		# エラー
 		result_data.push(res_word[:res_error])
@@ -158,16 +169,18 @@ response.values.each_with_index do |row, idx|
 		puts %(【在庫チェック失敗】URL：#{target_url})
 		log.fatal(%(【在庫チェック失敗】URL：#{target_url}))
 	end
+	puts "------------------------"
 end
 session.quit
 
-pp result_data
+# pp result_data
 
+puts "========================"
+puts "結果の書き込み"
+puts "========================"
 data = Google::Apis::SheetsV4::ValueRange.new
 data.major_dimension = 'COLUMNS'
 data.values = [result_data]
 range = %('#{sheet_name_data}'!D1:D#{result_data.count+1})
 response = service.update_spreadsheet_value(spreadsheet_id, range, data, value_input_option: 'RAW')
-
-# 残りの書き込み
 
