@@ -20,7 +20,7 @@ def check_stock(session, url, words)
 
 	# メルカリはページ遷移に時間がかかるため、待つ
 	# アクセス先の負荷軽減も兼ねる
-	sleep(1)
+	sleep(5)
 
 	# 判定
 	html = session.page_source
@@ -105,7 +105,7 @@ response.values.each do |row|
 		keyword_not_found: keyword_not_found
 	}
 end
-pp keyword_list
+# pp keyword_list
 
 # ループで一件ずつチェック→結果を格納
 # 100件ずつスプレッドシートに書き込み
