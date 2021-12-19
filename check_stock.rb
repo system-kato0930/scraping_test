@@ -28,7 +28,8 @@ def check_stock(session, url, words, domain)
 
 	wait_domain = %w(jp.mercari.com www.amazon.co.jp item.rakuten.co.jp)
 
-	sleep(5) if wait_domain.include?(domain)
+	# sleep(5) if wait_domain.include?(domain)
+	sleep(20)
 
 	# ページのタイトルを出力する
 	puts %(タイトル：#{session.title})
