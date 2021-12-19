@@ -35,6 +35,7 @@ def check_stock(session, url, words, domain)
 
 	# 判定
 	html = session.page_source
+	puts %(html：#{html[0..100]})
 
 	# puts html
 	if words[:keyword_short].any? { |t| html.include?(t) }
