@@ -16,7 +16,7 @@ def check_stock(session, url, words)
 	session.navigate.to url
 
 	# ページのタイトルを出力する
-	puts %(＊ #{session.title})
+	puts %(タイトル：#{session.title})
 
 	# メルカリはページ遷移に時間がかかるため、待つ
 	# アクセス先の負荷軽減も兼ねる
@@ -158,15 +158,16 @@ response.values.each_with_index do |row, idx|
 
 	begin
 		# チェック実行
+		puts %(【URL】 #{url})
 		check_res = check_stock(session, target_url, keyword_list[domain])
 		puts check_res
 		result_data.push(res_word[check_res])
-		puts %(　 →#{res_word[check_res]})
+		puts %(→SUCCESS：#{res_word[check_res]})
 	rescue => e
 		# エラー
 		result_data.push(res_word[:res_error])
 		p e
-		puts %(【在庫チェック失敗】URL：#{target_url})
+		puts %(→ERROR：在庫チェック失敗)
 		log.fatal(%(【在庫チェック失敗】URL：#{target_url}))
 	end
 	puts "------------------------"
