@@ -116,16 +116,35 @@ end
 puts "========================"
 puts "Selenium セットアップ"
 puts "========================"
-options = Selenium::WebDriver::Chrome::Options.new
-user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.2 Safari/605.1.15'
-options.add_argument("--user-agent=#{user_agent}")
-options.add_argument('headless')
-options.add_argument('--disable-gpu')
-options.add_argument('window-size=500,500')
-options.add_argument('--no-sandbox')
-options.add_argument('--disable-dev-shm-usage')
-options.add_argument('--remote-debugging-port=9222')
-session = Selenium::WebDriver.for :chrome, options: options
+
+
+def selenium_options
+  	options = Selenium::WebDriver::Chrome::Options.new
+  	user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.2 Safari/605.1.15'
+	options.add_argument("--user-agent=#{user_agent}")
+	options.add_argument('headless')
+	options.add_argument('--disable-gpu')
+	options.add_argument('window-size=500,500')
+	options.add_argument('--no-sandbox')
+	options.add_argument('--disable-dev-shm-usage')
+	options.add_argument('--remote-debugging-port=9222')
+  	options
+end
+
+# optional
+def selenium_capabilities_chrome
+  	Selenium::WebDriver::Remote::Capabilities.chrome
+end
+
+def driver_init
+	caps = [
+	    selenium_options,
+	    selenium_capabilities_chrome,
+	]
+  	Selenium::WebDriver.for(:chrome, capabilities: caps)
+end
+
+session = driver_init
 session.manage.timeouts.implicit_wait = 10 # 10秒待っても読み込まれない場合は、エラーが発生する
 
 puts "========================"
