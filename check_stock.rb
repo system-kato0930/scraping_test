@@ -9,6 +9,9 @@ require 'selenium-webdriver'
 # loggerライブラリを読み込み
 require 'logger'
 require 'uri'
+require 'objspace'
+
+puts "#{ObjectSpace.memsize_of_all * 0.001 * 0.001} MB"
 
 def check_stock(session, url, words, domain)
 
@@ -99,6 +102,8 @@ service = Google::Apis::SheetsV4::SheetsService.new
 service.client_options.application_name = APPLICATION_NAME
 service.authorization = authorize
 
+puts "#{ObjectSpace.memsize_of_all * 0.001 * 0.001} MB"
+
 puts "========================"
 puts "在庫ワード取得"
 puts "========================"
@@ -120,6 +125,8 @@ response.values.each do |row|
 	}
 end
 # pp keyword_list
+
+puts "#{ObjectSpace.memsize_of_all * 0.001 * 0.001} MB"
 
 puts "========================"
 puts "Selenium セットアップ"
@@ -155,6 +162,8 @@ end
 session = driver_init
 session.manage.timeouts.implicit_wait = 10 # 10秒待っても読み込まれない場合は、エラーが発生する
 
+puts "#{ObjectSpace.memsize_of_all * 0.001 * 0.001} MB"
+
 puts "========================"
 puts "対象URLの取得"
 puts "========================"
@@ -162,11 +171,16 @@ range = %('#{sheet_name_data}'!A:D)
 # puts range
 response = service.get_spreadsheet_values(spreadsheet_id, range)
 
+puts "#{ObjectSpace.memsize_of_all * 0.001 * 0.001} MB"
+
 puts "========================"
 puts "在庫チェック開始"
 puts "========================"
 result_data = []
 response.values.each_with_index do |row, idx|
+
+	puts "#{ObjectSpace.memsize_of_all * 0.001 * 0.001} MB"
+
 	target_url = row[0]
 	check_result = row[3]
 	
@@ -181,7 +195,7 @@ response.values.each_with_index do |row, idx|
 	domain = URI.parse(target_url).host
 
 	# アクセス先の負荷軽減
-	# sleep(1)
+	sleep(1)
 
 	begin
 		# チェック実行
@@ -200,6 +214,8 @@ response.values.each_with_index do |row, idx|
 	puts "------------------------"
 end
 session.quit
+
+puts "#{ObjectSpace.memsize_of_all * 0.001 * 0.001} MB"
 
 # pp result_data
 
