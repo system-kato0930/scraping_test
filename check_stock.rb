@@ -10,14 +10,22 @@ require 'selenium-webdriver'
 require 'logger'
 require 'uri'
 
-def check_stock(session, url, words)
+def check_stock(session, url, words, domain)
 
 	# ページ遷移する
 	session.navigate.to url
 
 	# メルカリはページ遷移に時間がかかるため、待つ
 	# アクセス先の負荷軽減も兼ねる
-	sleep(5)
+	# :timeoutオプションは秒数を指定している。この場合は100秒
+	wait = Selenium::WebDriver::Wait.new(:timeout => 100) 
+	 
+	# untilメソッドは文字通り「～するまで」を意味する
+	wait.until {session.page_source}
+
+	wait_domain = %w(jp.mercari.com www.amazon.co.jp item.rakuten.co.jp)
+
+	sleep(5) if wait_domain.include?(domain)
 
 	# ページのタイトルを出力する
 	puts %(タイトル：#{session.title})
@@ -178,8 +186,8 @@ response.values.each_with_index do |row, idx|
 	begin
 		# チェック実行
 		puts %(【URL】 #{target_url})
-		check_res = check_stock(session, target_url, keyword_list[domain])
-		puts check_res
+		check_res = check_stock(session, target_url, keyword_list[domain],domain)
+		# puts check_res
 		result_data.push(res_word[check_res])
 		puts %(→SUCCESS：#{res_word[check_res]})
 	rescue => e
