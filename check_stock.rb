@@ -171,12 +171,17 @@ puts "========================"
 puts "在庫チェック開始"
 puts "========================"
 result_data = []
+data = Google::Apis::SheetsV4::ValueRange.new
+data.major_dimension = 'COLUMNS'
+last_idx = 0
+# 書き込む件数
+limit = 10
 response.values.each_with_index do |row, idx|
-
-
 
 	target_url = row[0]
 	check_result = row[3]
+
+	puts %(No.#{idx}【URL】 #{target_url})
 	
 	# URLが入力されていない、または、結果が空でない場合、スキップ
 	# エラーは再試行
@@ -193,7 +198,6 @@ response.values.each_with_index do |row, idx|
 
 	begin
 		# チェック実行
-		puts %(【URL】 #{target_url})
 		check_res = check_stock(session, target_url, keyword_list[domain],domain)
 		# puts check_res
 		result_data.push(res_word[check_res])
@@ -206,18 +210,36 @@ response.values.each_with_index do |row, idx|
 		log.fatal(%(【在庫チェック失敗】URL：#{target_url}))
 	end
 	puts "------------------------"
+
+	if (idx+1) % limit == 0
+		puts "========================"
+		puts "結果の書き込み"
+		puts "========================"
+		data.values = [result_data]
+		range = %('#{sheet_name_data}'!D#{idx+2-limit}:D#{idx+2})
+		response = service.update_spreadsheet_value(spreadsheet_id, range, data, value_input_option: 'RAW')
+		result_data = []
+	end
+
+	last_idx = idx
 end
 session.quit
 
 
 # pp result_data
 
+# puts "========================"
+# puts "結果の書き込み"
+# puts "========================"
+# data = Google::Apis::SheetsV4::ValueRange.new
+# data.major_dimension = 'COLUMNS'
+# data.values = [result_data]
+# range = %('#{sheet_name_data}'!D1:D#{result_data.count+1})
+# response = service.update_spreadsheet_value(spreadsheet_id, range, data, value_input_option: 'RAW')
 puts "========================"
 puts "結果の書き込み"
 puts "========================"
-data = Google::Apis::SheetsV4::ValueRange.new
-data.major_dimension = 'COLUMNS'
 data.values = [result_data]
-range = %('#{sheet_name_data}'!D1:D#{result_data.count+1})
+range = %('#{sheet_name_data}'!D#{last_idx+2-result_data.count}:D#{last_idx+2})
 response = service.update_spreadsheet_value(spreadsheet_id, range, data, value_input_option: 'RAW')
 
