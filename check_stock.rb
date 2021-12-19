@@ -11,7 +11,6 @@ require 'logger'
 require 'uri'
 require 'objspace'
 
-puts "#{ObjectSpace.memsize_of_all * 0.001 * 0.001} MB"
 
 def check_stock(session, url, words, domain)
 
@@ -28,16 +27,13 @@ def check_stock(session, url, words, domain)
 
 	wait_domain = %w(jp.mercari.com www.amazon.co.jp item.rakuten.co.jp)
 
-	sleep(20) if wait_domain.include?(domain)
-	sleep(20)
+	sleep(10) if wait_domain.include?(domain)
 
 	# ページのタイトルを出力する
 	puts %(タイトル：#{session.title})
 
 	# 判定
 	html = session.page_source
-	puts %(html：#{html[0..100]})
-	puts html
 
 	# puts html
 	if words[:keyword_short].any? { |t| html.include?(t) }
@@ -106,7 +102,6 @@ service = Google::Apis::SheetsV4::SheetsService.new
 service.client_options.application_name = APPLICATION_NAME
 service.authorization = authorize
 
-puts "#{ObjectSpace.memsize_of_all * 0.001 * 0.001} MB"
 
 puts "========================"
 puts "在庫ワード取得"
@@ -130,52 +125,39 @@ response.values.each do |row|
 end
 # pp keyword_list
 
-puts "#{ObjectSpace.memsize_of_all * 0.001 * 0.001} MB"
 
 puts "========================"
 puts "Selenium セットアップ"
 puts "========================"
 
 
-# def selenium_options
-#   	options = Selenium::WebDriver::Chrome::Options.new
-#   	user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.2 Safari/605.1.15'
-# 	options.add_argument("--user-agent=#{user_agent}")
-# 	options.add_argument('headless')
-# 	options.add_argument('--disable-gpu')
-# 	options.add_argument('window-size=500,500')
-# 	options.add_argument('--no-sandbox')
-# 	options.add_argument('--disable-dev-shm-usage')
-# 	options.add_argument('--remote-debugging-port=9222')
-#   	options
-# end
+def selenium_options
+  	options = Selenium::WebDriver::Chrome::Options.new
+  	user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.2 Safari/605.1.15'
+	options.add_argument("--user-agent=#{user_agent}")
+	options.add_argument('headless')
+	options.add_argument('--disable-gpu')
+	options.add_argument('--no-sandbox')
+	options.add_argument('--disable-dev-shm-usage')
+	options.add_argument('--remote-debugging-port=9222')
+  	options
+end
 
-# # optional
-# def selenium_capabilities_chrome
-#   	Selenium::WebDriver::Remote::Capabilities.chrome
-# end
+# optional
+def selenium_capabilities_chrome
+  	Selenium::WebDriver::Remote::Capabilities.chrome
+end
 
-# def driver_init
-# 	caps = [
-# 	    selenium_options,
-# 	    selenium_capabilities_chrome,
-# 	]
-#   	Selenium::WebDriver.for(:chrome, capabilities: caps)
-# end
-# session = driver_init
-options = Selenium::WebDriver::Chrome::Options.new
-user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.2 Safari/605.1.15'
-options.add_argument("--user-agent=#{user_agent}")
-# options.add_argument('headless')
-# options.add_argument('--disable-gpu')
-# options.add_argument('window-size=950,800')
-# options.add_argument('--no-sandbox')
-# options.add_argument('--disable-dev-shm-usage')
-# options.add_argument('--remote-debugging-port=9222')
-session = Selenium::WebDriver.for :chrome, options: options
+def driver_init
+	caps = [
+	    selenium_options,
+	    selenium_capabilities_chrome,
+	]
+  	Selenium::WebDriver.for(:chrome, capabilities: caps)
+end
+session = driver_init
 session.manage.timeouts.implicit_wait = 10 # 10秒待っても読み込まれない場合は、エラーが発生する
 
-puts "#{ObjectSpace.memsize_of_all * 0.001 * 0.001} MB"
 
 puts "========================"
 puts "対象URLの取得：#{sheet_name_data}"
@@ -184,7 +166,6 @@ range = %('#{sheet_name_data}'!A:D)
 # puts range
 response = service.get_spreadsheet_values(spreadsheet_id, range)
 
-puts "#{ObjectSpace.memsize_of_all * 0.001 * 0.001} MB"
 
 puts "========================"
 puts "在庫チェック開始"
@@ -192,7 +173,7 @@ puts "========================"
 result_data = []
 response.values.each_with_index do |row, idx|
 
-	puts "#{ObjectSpace.memsize_of_all * 0.001 * 0.001} MB"
+
 
 	target_url = row[0]
 	check_result = row[3]
@@ -228,7 +209,6 @@ response.values.each_with_index do |row, idx|
 end
 session.quit
 
-puts "#{ObjectSpace.memsize_of_all * 0.001 * 0.001} MB"
 
 # pp result_data
 
