@@ -20,7 +20,7 @@ def check_stock(session, url, words)
 
 	# メルカリはページ遷移に時間がかかるため、待つ
 	# アクセス先の負荷軽減も兼ねる
-	sleep(5)
+	sleep(10)
 
 	# 判定
 	html = session.page_source
@@ -167,7 +167,7 @@ response.values.each_with_index do |row, idx|
 		# エラー
 		result_data.push(res_word[:res_error])
 		p e
-		puts %(→ERROR：在庫チェック失敗)
+		puts %(→：在庫チェック失敗)
 		log.fatal(%(【在庫チェック失敗】URL：#{target_url}))
 	end
 	puts "------------------------"
