@@ -165,7 +165,7 @@ user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.
 options.add_argument("--user-agent=#{user_agent}")
 options.add_argument('headless')
 options.add_argument('--disable-gpu')
-options.add_argument('window-size=500,500')
+options.add_argument('window-size=950,800')
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 options.add_argument('--remote-debugging-port=9222')
