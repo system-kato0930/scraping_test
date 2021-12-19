@@ -158,7 +158,7 @@ response.values.each_with_index do |row, idx|
 
 	begin
 		# チェック実行
-		puts %(【URL】 #{url})
+		puts %(【URL】 #{target_url})
 		check_res = check_stock(session, target_url, keyword_list[domain])
 		puts check_res
 		result_data.push(res_word[check_res])
